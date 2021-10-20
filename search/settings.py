@@ -120,7 +120,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = 'static/'
+STATIC_ROOT = '/home/compsem/myproject/search/static'
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
