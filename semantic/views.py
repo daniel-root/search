@@ -1,6 +1,6 @@
 from django.shortcuts import render
 import spacy
-nlp = spacy.load('pt_core_news_sm')
+nlp = spacy.load('en_core_web_lg')
 from itertools import product
 from . import wordnet
 import language_tool_python
