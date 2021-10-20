@@ -124,7 +124,7 @@ STATIC_ROOT = '/home/compsem/myproject/static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
-    '/home/compsem/myproject/static/',
+    '/home/compsem/myproject/search/semantic/static/',
 ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
