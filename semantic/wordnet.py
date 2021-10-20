@@ -5,7 +5,7 @@ from rdflib import URIRef, Namespace
 
 SCHEMA = Namespace("http://www.w3.org/2006/03/wn/wn20/schema/")
 INSTANCES = Namespace("http://www.w3.org/2006/03/wn/wn20/instances/")
-
+'''
 wordnet = Graph()
 wordnet.load("./search/semantic/wordnet/wnfull.rdfs")
 wordnet.load("./search/semantic/wordnet/wordnet-antonym.rdf")
@@ -44,7 +44,7 @@ def synset(word):
   results = wordnet.query(query)
 
   return [ row['aSynset'] for row in results]
-
+'''
 def busca_semantica(sentenses):
   data = []
   for words in sentenses:
