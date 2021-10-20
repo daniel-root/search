@@ -1,4 +1,5 @@
 from django.shortcuts import render
+'''
 import spacy
 nlp = spacy.load('en_core_web_lg')
 from itertools import product
@@ -31,11 +32,13 @@ def create_sentences(lista, biblioteca):
         x = list(product(lista_a[i-1], lista_a[i]))
         lista_a[i] = set([' '.join(j) for j in x])
     return ' '.join(lista) , lista_a[-1]
-
+'''
 def home(request):
     if request.POST:
         search = request.POST['search']
         data = {}
+        '''
+        
         conference_help_doc = nlp(search)
         lemmatization = [[token.lemma_ for token in conference_help_doc]]
         semantic = wordnet.busca_semantica(lemmatization)
@@ -43,7 +46,7 @@ def home(request):
         #original, sentenses = create_sentences(lemmatization[0], semantic[0])
         data['original'], data['sentences'] = create_sentences(lemmatization[0], semantic[0])
         print(data['original'], data['sentences'])
-
+        '''
 
         '''sentences1 = data['original'] 
         sentences2 = data['sentences']
