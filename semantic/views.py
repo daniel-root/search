@@ -42,7 +42,7 @@ def home(request):
         data['semantic'] = semantic
         #original, sentenses = create_sentences(lemmatization[0], semantic[0])
         data['original'], data['sentences'] = create_sentences(lemmatization[0], semantic[0])
-        print(data['original'], data['sentences'])
+        #print(data['original'], data['sentences'])
 
 
         '''sentences1 = data['original'] 

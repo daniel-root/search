@@ -51,6 +51,6 @@ def busca_semantica(sentenses):
     aux = {}
     for word in words:
       results = synset(word)
-      aux[word] = results
+      aux[word] = [wordnet.value(i,RDFS.label) for i in results]
     data.append(aux)
   return data
