@@ -63,7 +63,7 @@ def home(request):
             output[sentence_transformer] = query({
                 "inputs": {
                     "source_sentence": {data['original']},
-                    "sentences": {data['sentences']}
+                    "sentences": data['sentences']
                 },
             },sentence_transformer)
 
