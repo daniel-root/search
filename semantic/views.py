@@ -41,7 +41,7 @@ def create_sentences(lista, biblioteca):
 
 
 def query(payload,sentence_transformer):
-    API_URL = "https://api-inference.huggingface.co/models/{sentence_transformer}"
+    API_URL = f"https://api-inference.huggingface.co/models/{sentence_transformer}"
     response = requests.post(API_URL, headers=headers, json=payload)
     return response.json()
 
