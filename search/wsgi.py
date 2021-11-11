@@ -17,5 +17,6 @@ import sys
 
 sys.path.append('/home/compsem/myproject')
 sys.path.append('/home/compsem/myproject/search')
+sys.path.append('/home/compsem/myproject/search/search')
 
 application = get_wsgi_application()
