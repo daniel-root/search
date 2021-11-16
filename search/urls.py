@@ -18,5 +18,6 @@ from django.urls import path
 from semantic.views import  home
 
 urlpatterns = [
-    path('', home,name="home")
+    path('', home,name="home"),
+    path('/api', home,name="api"),
 ]
