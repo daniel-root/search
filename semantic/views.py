@@ -95,3 +95,12 @@ def search_api(request):
         data['semantic'] = semantic
         data['original'], data['sentences'] = create_sentences(lemmatization[0], semantic[0])
         return JsonResponse(data)
+    elif request.POST:
+        search = request.POST['search']
+        data = {}
+        conference_help_doc = nlp(search)
+        lemmatization = [[token.lemma_ for token in conference_help_doc]]
+        semantic = wordnet.busca_semantica(lemmatization)
+        data['semantic'] = semantic
+        data['original'], data['sentences'] = create_sentences(lemmatization[0], semantic[0])
+        return JsonResponse(data)
