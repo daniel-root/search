@@ -6,7 +6,7 @@ import language_tool_python
 from sentence_transformers import SentenceTransformer, util
 
 nlp = spacy.load('en_core_web_lg')
-suffixes = nlp.Defaults.suffixes + (r'''\w+-\w+''',)
+suffixes = list(nlp.Defaults.suffixes + [r'''\w+-\w+'''])
 suffix_regex = spacy.util.compile_suffix_regex(suffixes)
 nlp.tokenizer.suffix_search = suffix_regex.search
 tool = language_tool_python.LanguageTool('en-US')
