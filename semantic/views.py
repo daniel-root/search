@@ -218,15 +218,21 @@ def home(request):
         
         data['original'] = original
         data['sentences'] = all_results
+        data['score'] = {}
 
-        #output = {}
+        output = {}
 
-        '''
         for sentence_transformer in sentence_transformers:
             output[sentence_transformer] = sentence_scores(data['original'], data['sentences'], sentence_transformer)
-        '''
 
-        #output[''] = data['sentences']
+        lista = list(output.values())[1:]
+        total = len(output)
+        for i in range(total):
+            soma = 0
+            for j in lista:
+                soma += j[i]
+            
+            data['score'][all_results[i]] = float(soma/total)
 
         return render(request,'results.html',data)
     

@@ -30,11 +30,11 @@
                       </tr>
                     </thead>
                     <tbody>
-                        {% for sentence in sentences %}
+                      {% for key, value in score %}
                       <tr>
                         <th scope="row">{{ forloop.counter }}</th>
-                        <td>{{ sentence }}</td>
-                        <td>{{ sentence }}</td>
+                        <td>{{ key }}</td>
+                        <td>{{ value }}</td>
                         <td><i class="fas fa-thumbs-up"></i> <i class="fas fa-thumbs-down"></i></td>
                         
                       </tr>
