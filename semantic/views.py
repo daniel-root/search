@@ -2,14 +2,14 @@ from django.shortcuts import render
 import spacy
 from itertools import product, permutations
 from . import wordnet
-import language_tool_python
+#import language_tool_python
 from sentence_transformers import SentenceTransformer, util
 
 nlp = spacy.load('en_core_web_lg')
 suffixes = list(nlp.Defaults.suffixes + [r'''\w+-\w+'''])
 suffix_regex = spacy.util.compile_suffix_regex(suffixes)
 nlp.tokenizer.suffix_search = suffix_regex.search
-tool = language_tool_python.LanguageTool('en-US')
+#tool = language_tool_python.LanguageTool('en-US')
 
 sentence_transformers = ['all-mpnet-base-v2',
                          'clip-ViT-B-32',
@@ -131,7 +131,7 @@ def sentence_scores(original, sentences, model):
     cosine_scores = util.cos_sim(embeddings1, embeddings2)
 
     return [cosine_scores[0][i] for i in range(len(sentences))]
-
+'''
 def correct(original,sentenses):       
     frase = tool.correct(original)
 
@@ -140,7 +140,7 @@ def correct(original,sentenses):
         aux.append(tool.correct(i))
 
     return frase, aux
-
+'''
 def create_sentences(lista, biblioteca):
     lista_a = []
     for i in lista:
@@ -208,9 +208,9 @@ def home(request):
         
         all_results = set(all_results)
 
-        original, all_results = correct(original,all_results)
+        #original, all_results = correct(original,all_results)
         
-        data['original'] = originals
+        data['original'] = original
         data['sentences'] = all_results
 
         #output = {}
