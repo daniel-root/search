@@ -18,6 +18,29 @@
     <div class="center">
         <div class="results-box">
             <div class="results-txt">
+                Original Sentence: {{ original }}
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Sentence</th>
+                        <th scope="col">%</th>
+                        <th scope="col">Vote</th>
+                        
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for sentence in sentences %}
+                      <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ sentence }}</td>
+                        <td>{{ sentence }}</td>
+                        <td><i class="fas fa-thumbs-up"></i> <i class="fas fa-thumbs-down"></i></td>
+                        
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
                 <!--
                 {{ sentence_tokenization }} <br>
                 {{ regex_ }} <br>
@@ -27,13 +50,7 @@
                 {{ without_stop_words }} <br>
                 {{ semantic }} <br>
                 -->
-                original: {{ original }} <br>
-                <ul>
-                {% for sentence in sentences %}
-                <li> {{ sentence }} </li>
-                {% endfor %}
-                <ul>
-                
+          
             </div>
         </div>  
         <div class="footer"></div>

@@ -10,13 +10,19 @@
     <title>Busca Semântica</title>
 </head>
 <body>
+  <div class="title">
+    On-Semse
+  </div>
     <form class="search-box" id="form" action="{% url 'home' %}" method="post">
         {% csrf_token %}
-        <input class="search-txt" type="text" name="search" id="search" placeholder="faça sua busca..." required>
+        <input class="search-txt" type="text" name="search" id="search" placeholder="enter your search..." required>
         <button class="search-btn" type=submit>
             <i class="fas fa-search"></i>
         </button>
     </form>
 </body>
+<footer>
+  Accuracy: 80%
+</footer>
 
 </html>
