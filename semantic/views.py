@@ -215,12 +215,13 @@ def home(request):
 
         #output = {}
 
-        #output[''] = data['sentences']
-
-    '''
+        '''
         for sentence_transformer in sentence_transformers:
             output[sentence_transformer] = sentence_scores(data['original'], data['sentences'], sentence_transformer)
-    '''
+        '''
+
+        #output[''] = data['sentences']
+
         return render(request,'results.html',data)
     
     return render(request,'index.html')
