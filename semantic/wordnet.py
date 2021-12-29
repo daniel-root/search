@@ -50,7 +50,7 @@ def busca_semantica(sentenses):
   for words in sentenses:
     aux = {}
     for word in words:
-      results = synset(word)
-      aux[word] = [wordnet.value(i,RDFS.label) for i in results]
+      results = synset(' '.join(word))
+      aux[' '.join(word)] = [str(wordnet.value(i,RDFS.label)) for i in results]
     data.append(aux)
   return data
