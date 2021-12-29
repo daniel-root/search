@@ -204,6 +204,9 @@ def home(request):
         for i in range(len(a)):
             teste[' '.join(grams[i])] = ' '.join(a[i])
         
+        for i in semantic[0].keys():
+            semantic[0][i].append(teste[i])
+
         for gram in token_grams:
             original, results = create_sentences([' '.join(i) for i in gram],semantic[0])
             originals.append(gram)
