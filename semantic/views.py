@@ -197,7 +197,10 @@ def home(request):
         originals = []
         all_results = []
 
+        a = token_uni + token_bi
+
         teste = {}
+
         for i in range(len(a)):
             teste[' '.join(grams[i])] = ' '.join(a[i])
         
