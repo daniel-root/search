@@ -51,7 +51,7 @@ def getNGrams(wordlist, n):
     return [wordlist[i:i+n] for i in range(len(wordlist)-(n-1))]
 
 def query(payload,sentence_transformer):
-    API_URL = "https://api-inference.huggingface.co/models/sentence-transformers/{sentence_transformer}"
+    API_URL = f"https://api-inference.huggingface.co/models/sentence-transformers/{sentence_transformer}"
     response = requests.post(API_URL, headers=headers, json=payload)
     return response.json()
 
@@ -121,8 +121,8 @@ def home(request):
 
         output['paraphrase-multilingual-MiniLM-L12-v2'] = query({
                 "inputs": {
-                    "source_sentence": {data['original']},
-                    "sentences": {data['sentences']}
+                    "source_sentence": data['original'],
+                    "sentences": data['sentences']
                 },
             },'paraphrase-multilingual-MiniLM-L12-v2')
         #for sentence_transformer in sentence_transformers
