@@ -21,6 +21,7 @@
         color: #e84118;
       }
       </style>
+      {% csrf_token %}
       <script>
         const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
         function myFunction(x) {
