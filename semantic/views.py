@@ -114,19 +114,20 @@ def home(request):
         #original, all_results = correct(original,all_results)
         
         data['original'] = original
-        data['sentences'] = all_results
-        data['score'] = {}
+        data['sentences'] = {}
 
         output = {}
 
         output['all-MiniLM-L6-v2'] = query({
                 "inputs": {
                     "source_sentence": data['original'],
-                    "sentences": list(data['sentences'])
+                    "sentences": list(all_results)
                 },
             },'all-MiniLM-L6-v2')
         #for sentence_transformer in sentence_transformers
         #output['all-MiniLM-L6-v2'] = sentence_scores(data['original'], data['sentences'])
+
+        all_results = list(all_results)
 
         lista = list(output.values())
         total = len(output)
@@ -135,7 +136,7 @@ def home(request):
             for j in lista:
                 soma += j[i]
             
-            data['score'][all_results[i]] = float(soma/total)
+            data['sentences'][all_results[i]] = round(float(soma/total), 2)
 
         return render(request,'results.html',data)
     
