@@ -1,17 +1,18 @@
 from django.shortcuts import render
 import spacy
+import requests
 from itertools import product, permutations
 from . import wordnet
 #import language_tool_python
-from sentence_transformers import SentenceTransformer, util
 
 nlp = spacy.load('en_core_web_lg')
 suffixes = list(nlp.Defaults.suffixes + [r'''\w+-\w+'''])
 suffix_regex = spacy.util.compile_suffix_regex(suffixes)
 nlp.tokenizer.suffix_search = suffix_regex.search
 #tool = language_tool_python.LanguageTool('en-US')
-
-
+API_TOKEN = 'api_sDCDNZeeeRAQvnIYclYFlzmMZUZiuEgiBN'
+headers = {"Authorization": f"Bearer {API_TOKEN}"}
+'''
 def sentence_scores(original, sentences):    
     model = SentenceTransformer('all-MiniLM-L6-v2')
 
@@ -21,6 +22,7 @@ def sentence_scores(original, sentences):
     cosine_scores = util.cos_sim(embeddings1, embeddings2)
 
     return [cosine_scores[0][i] for i in range(len(sentences))]
+'''
 '''
 def correct(original,sentenses):       
     frase = tool.correct(original)
@@ -47,6 +49,11 @@ def create_sentences(lista, biblioteca):
 
 def getNGrams(wordlist, n):
     return [wordlist[i:i+n] for i in range(len(wordlist)-(n-1))]
+
+def query(payload,sentence_transformer):
+    API_URL = "https://api-inference.huggingface.co/models/sentence-transformers/{sentence_transformer}"
+    response = requests.post(API_URL, headers=headers, json=payload)
+    return response.json()
 
 def home(request):
     if request.POST:
@@ -112,10 +119,16 @@ def home(request):
 
         output = {}
 
+        output['paraphrase-multilingual-MiniLM-L12-v2'] = query({
+                "inputs": {
+                    "source_sentence": {data['original']},
+                    "sentences": {data['sentences']}
+                },
+            },'paraphrase-multilingual-MiniLM-L12-v2')
         #for sentence_transformer in sentence_transformers
-        output['all-MiniLM-L6-v2'] = sentence_scores(data['original'], data['sentences'])
+        #output['all-MiniLM-L6-v2'] = sentence_scores(data['original'], data['sentences'])
 
-        lista = list(output.values())[1:]
+        lista = list(output.values())
         total = len(output)
         for i in range(total):
             soma = 0
