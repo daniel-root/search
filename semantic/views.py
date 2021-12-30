@@ -4,7 +4,7 @@ import spacy
 import requests
 from itertools import product, permutations
 from . import wordnet
-from .models import Vote
+from semantic.models import Vote
 #import language_tool_python
 
 nlp = spacy.load('en_core_web_lg')
