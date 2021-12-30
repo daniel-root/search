@@ -22,6 +22,7 @@
       }
       </style>
       <script>
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
         function myFunction(x) {
           x.style.color = '#e84118';
           let id = x.id;
@@ -38,6 +39,7 @@
             url: "{% url 'voting' %}",
             type: "POST",
             dataType: "json",
+            headers: {'X-CSRFToken': csrftoken},
             data: {'classe' : classe},
 
             success: (data) => {
