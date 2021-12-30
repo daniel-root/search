@@ -80,7 +80,7 @@
                         <th scope="row">{{ forloop.counter }}</th>
                         <td>{{ key }}</td>
                         <td>{{ value }}</td>
-                        <td><i id ="{{ forloop.counter }}" class="fas fa-thumbs-up {{ forloop.counter }}"></i> <i id="{{ forloop.counter }}" class="fas fa-thumbs-down {{ forloop.counter }}"></i></td>
+                        <td><i onclick="myFunction(this)" id ="{{ forloop.counter }}" class="fas fa-thumbs-up {{ forloop.counter }}"></i> <i onclick="myFunction(this)" id="{{ forloop.counter }}" class="fas fa-thumbs-down {{ forloop.counter }}"></i></td>
                         
                       </tr>
                       {% endfor %}
