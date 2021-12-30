@@ -1,8 +1,10 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 import spacy
 import requests
 from itertools import product, permutations
 from . import wordnet
+from .models import Vote
 #import language_tool_python
 
 nlp = spacy.load('en_core_web_lg')
@@ -136,6 +138,23 @@ def home(request):
         
         data['sentences'] = {k: v for k, v in sorted(data['sentences'].items(), reverse=True, key=lambda item: item[1])}
 
+        vote = Vote.objects.get(id=1)
+
+        data['vote'] = round((vote.like*100) / vote.total, 2)
+
         return render(request,'results.html',data)
     
     return render(request,'index.html')
+
+def voting(request):
+    if request.is_ajax and request.method == "POST":
+        vote = Vote.objects.get(id=1)
+        classe = request.POST['classe']
+        if classe == "fa-thumbs-up":
+            vote.likes()
+            vote.save()
+        else:
+            vote.deslikes()
+            vote.save()
+
+        return JsonResponse({'success': True})

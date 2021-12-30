@@ -7,6 +7,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'results.css' %}">
     <script src="https://kit.fontawesome.com/9818674179.js" crossorigin="anonymous"></script>
+    <style>
+      .fas {
+        cursor: pointer;
+        user-select: none;
+        padding: 0.1rem;
+      }
+      .fa-thumbs-up:hover {
+        color: #e84118;
+      }
+      .fa-thumbs-down:hover {
+        color: #e84118;
+      }
+      </style>
+      <script>
+        function myFunction(x) {
+          x.style.color = '#e84118';
+          let id = x.id;
+          let classe = x.className.split(" ")[1];
+          if (classe == "fa-thumbs-up"){
+            var cols = document.getElementsByClassName('fas fa-thumbs-down '+id);
+          }else{
+            var cols = document.getElementsByClassName('fas fa-thumbs-up '+id);
+          }
+          for(i = 0; i < cols.length; i++) {
+               cols[i].style.color = 'white';
+          }
+          $.ajax({
+            url: "{% url 'voting' %}",
+            type: "POST",
+            dataType: "json",
+            data: {'classe' : classe},
+            headers: {
+              "X-Requested-With": "XMLHttpRequest",
+              "X-CSRFToken": getCookie("csrftoken"),  // don't forget to include the 'getCookie' function
+            },
+            success: (data) => {
+              console.log(data);
+            },
+            error: (error) => {
+              console.log(error);
+            }
+          });
+
+        }
+        </script>
     <title>Resultados</title>
 </head>
 <body>
@@ -35,7 +80,7 @@
                         <th scope="row">{{ forloop.counter }}</th>
                         <td>{{ key }}</td>
                         <td>{{ value }}</td>
-                        <td><i class="fas fa-thumbs-up"></i> <i class="fas fa-thumbs-down"></i></td>
+                        <td><i id ="{{ forloop.counter }}" class="fas fa-thumbs-up {{ forloop.counter }}"></i> <i id="{{ forloop.counter }}" class="fas fa-thumbs-down {{ forloop.counter }}"></i></td>
                         
                       </tr>
                       {% endfor %}
