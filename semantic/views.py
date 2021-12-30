@@ -150,7 +150,7 @@ def home(request):
     return render(request,'index.html',data)
 
 def voting(request):
-    if request.is_ajax and request.method == "POST":
+    if request.method == "POST":
         vote = Vote.objects.get(id=1)
         classe = request.POST['classe']
         if classe == "fa-thumbs-up":
@@ -161,3 +161,4 @@ def voting(request):
             vote.save()
 
         return JsonResponse({'success': True})
+    return JsonResponse({'success': False})
