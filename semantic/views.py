@@ -120,7 +120,7 @@ def home(request):
 
         lista = query({
                 "inputs": {
-                    "source_sentence": data['original'],
+                    "source_sentence": search,
                     "sentences": list(all_results)
                 },
             },'all-MiniLM-L6-v2')
