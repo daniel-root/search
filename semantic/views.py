@@ -122,7 +122,7 @@ def home(request):
         output['all-MiniLM-L6-v2'] = query({
                 "inputs": {
                     "source_sentence": data['original'],
-                    "sentences": data['sentences']
+                    "sentences": list(data['sentences'])
                 },
             },'all-MiniLM-L6-v2')
         #for sentence_transformer in sentence_transformers
