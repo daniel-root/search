@@ -116,9 +116,9 @@ def home(request):
         data['original'] = original
         data['sentences'] = {}
 
-        output = {}
+        #output = {}
 
-        output['all-MiniLM-L6-v2'] = query({
+        lista = query({
                 "inputs": {
                     "source_sentence": data['original'],
                     "sentences": list(all_results)
@@ -129,14 +129,11 @@ def home(request):
 
         all_results = list(all_results)
 
-        lista = list(output.values())
-        total = len(output)
-        for i in range(total):
-            soma = 0
-            for j in lista:
-                soma += j[i]
-            
-            data['sentences'][all_results[i]] = round(float(soma/total), 2)
+        #lista = list(output.values())
+        total = len(lista)
+        for i in range(total):          
+            data['sentences'][all_results[i]] = round(lista[i], 2)
+        
 
         return render(request,'results.html',data)
     
