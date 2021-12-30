@@ -119,12 +119,12 @@ def home(request):
 
         output = {}
 
-        output['paraphrase-multilingual-MiniLM-L12-v2'] = query({
+        output['all-MiniLM-L6-v2'] = query({
                 "inputs": {
                     "source_sentence": data['original'],
                     "sentences": data['sentences']
                 },
-            },'paraphrase-multilingual-MiniLM-L12-v2')
+            },'all-MiniLM-L6-v2')
         #for sentence_transformer in sentence_transformers
         #output['all-MiniLM-L6-v2'] = sentence_scores(data['original'], data['sentences'])
 
