@@ -58,10 +58,11 @@ def query(payload,sentence_transformer):
     return response.json()
 
 def home(request):
+    data = {}
     if request.POST:
         search = request.POST['search']
 
-        data = {}
+        
 
         conference_help_doc = nlp(search)
 
@@ -138,13 +139,15 @@ def home(request):
         
         data['sentences'] = {k: v for k, v in sorted(data['sentences'].items(), reverse=True, key=lambda item: item[1])}
 
-        vote = Vote.objects.get(id=1)
+       
 
-        data['vote'] = round((vote.like*100) / vote.total, 2)
 
         return render(request,'results.html',data)
-    
-    return render(request,'index.html')
+
+    vote = Vote.objects.get(id=1)
+    data['vote'] = round((vote.like*100) / vote.total, 2)    
+
+    return render(request,'index.html',data)
 
 def voting(request):
     if request.is_ajax and request.method == "POST":
