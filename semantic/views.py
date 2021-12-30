@@ -134,6 +134,7 @@ def home(request):
         for i in range(total):          
             data['sentences'][all_results[i]] = round(lista[i], 2)
         
+        data['sentences'] = {k: v for k, v in sorted(data['sentences'].items(), reverse=True, key=lambda item: item[1])}
 
         return render(request,'results.html',data)
     
