@@ -13,6 +13,13 @@
   <div class="title">
     On-Semse
   </div>
+  {% if messages %}
+<ul class="messages" style="position: relative;">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
     <form class="search-box" id="form" action="{% url 'home' %}" method="post">
         {% csrf_token %}
         <input class="search-txt" type="text" name="search" id="search" placeholder="enter your search..." required>

@@ -5,6 +5,7 @@ import requests
 from itertools import product, permutations
 from . import wordnet
 from semantic.models import Vote
+from django.contrib import messages
 #import language_tool_python
 
 nlp = spacy.load('en_core_web_lg')
@@ -116,7 +117,7 @@ def home(request):
 
         #original, all_results = correct(original,all_results)
         
-        data['original'] = original
+        data['original'] = search
         data['sentences'] = {}
 
         #output = {}
@@ -127,6 +128,12 @@ def home(request):
                     "sentences": list(all_results)
                 },
             },'all-MiniLM-L6-v2')
+
+        if not isinstance(lista,list):
+            vote = Vote.objects.get(id=1)
+            data['vote'] = round((vote.like*100) / vote.total, 2)
+            messages.info(request, 'Houve um error na busca, tente novamente.')  
+            return render(request,'index.html',data)
         #for sentence_transformer in sentence_transformers
         #output['all-MiniLM-L6-v2'] = sentence_scores(data['original'], data['sentences'])
 
