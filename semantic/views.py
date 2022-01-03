@@ -132,7 +132,7 @@ def home(request):
         if not isinstance(lista,list):
             vote = Vote.objects.get(id=1)
             data['vote'] = round((vote.like*100) / vote.total, 2)
-            messages.info(request, 'Houve um error na busca, tente novamente.')  
+            messages.info(request, 'There was an error performing your search. Please try again.')  
             return render(request,'index.html',data)
         #for sentence_transformer in sentence_transformers
         #output['all-MiniLM-L6-v2'] = sentence_scores(data['original'], data['sentences'])
