@@ -7,16 +7,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">
     <script src="https://kit.fontawesome.com/9818674179.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <title>Busca Semântica</title>
+
 </head>
 <body>
   <div class="title">
     On-Semse
   </div>
   {% if messages %}
+  <script>
+    $().ready(function() {
+    setTimeout(function () {
+      $('#messages').hide(); 
+    }, 2500);
+  });
+  </script>
     {% for message in messages %}
       {% if message.tags %}
-      <div class="messages {{ message.tags }}">
+      <div id='messages' class="messages {{ message.tags }}">
       {% endif %}
       {{ message }}
       </div>
