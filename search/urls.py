@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from semantic.views import  home, voting
+from semantic.views import  home, voting, api
 
 urlpatterns = [
     path('', home, name = "home"),
+    path('api', api, name = "api"),
     path('ajax/vote', voting, name = "voting"),
 ]
