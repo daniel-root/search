@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import JsonResponse
 import spacy
 import requests
 from itertools import product, permutations
@@ -241,7 +241,7 @@ def api(request):
         
         data['sentences'] = {k: v for k, v in sorted(data['sentences'].items(), reverse=True, key=lambda item: item[1])}
 
-        return HttpResponse(data, content_type="application/json")
+        return JsonResponse([data], safe=False)
 
        
 
