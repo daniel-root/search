@@ -7,7 +7,7 @@ from . import wordnet
 from semantic.models import Vote
 from django.contrib import messages
 #import language_tool_python
-import json
+
 nlp = spacy.load('en_core_web_lg')
 suffixes = list(nlp.Defaults.suffixes + [r'''\w+-\w+'''])
 suffix_regex = spacy.util.compile_suffix_regex(suffixes)
@@ -158,92 +158,93 @@ def home(request):
 
 def api(request):
     data = {}
-    if request.POST:
-        search = request.POST['search']
-        conference_help_doc = nlp(search)
+    try:
+        search = request.GET['search']
+    except:
+        return JsonResponse({'error': 'No search parameter provided'})
 
-        #Tokenalização e Lematização
-        lemmatization, token = [token.lemma_ for token in conference_help_doc],[token.norm_ for token in conference_help_doc]
+    conference_help_doc = nlp(search)
 
-        #N-grams
-        unigrams = [[i] for i in lemmatization]
-        bigrams = getNGrams(lemmatization,2)
+    #Tokenalização e Lematização
+    lemmatization, token = [token.lemma_ for token in conference_help_doc],[token.norm_ for token in conference_help_doc]
 
-        #Token n-gramas
-        token_uni = [[i] for i in token]
-        token_bi = getNGrams(token,2)
+    #N-grams
+    unigrams = [[i] for i in lemmatization]
+    bigrams = getNGrams(lemmatization,2)
 
-        #N-grams
-        grams = unigrams + bigrams
-        
-        search = ' '.join(lemmatization) + ' '
+    #Token n-gramas
+    token_uni = [[i] for i in token]
+    token_bi = getNGrams(token,2)
 
-        token_grams = []
+    #N-grams
+    grams = unigrams + bigrams
+    
+    search = ' '.join(lemmatization) + ' '
 
-        for i in range(len(unigrams),1,-1):
-            for tokens in permutations(grams,i):
-                string = ''
-                for token in tokens:
-                    string += ' '.join(token) + ' '
-                if string == search:
-                    token_grams.append(list(tokens))
+    token_grams = []
 
-        semantic = wordnet.busca_semantica([grams])
+    for i in range(len(unigrams),1,-1):
+        for tokens in permutations(grams,i):
+            string = ''
+            for token in tokens:
+                string += ' '.join(token) + ' '
+            if string == search:
+                token_grams.append(list(tokens))
 
-        originals = []
-        all_results = []
+    semantic = wordnet.busca_semantica([grams])
 
-        a = token_uni + token_bi
+    originals = []
+    all_results = []
 
-        teste = {}
+    a = token_uni + token_bi
 
-        for i in range(len(a)):
-            teste[' '.join(grams[i])] = ' '.join(a[i])
-        
-        for i in semantic[0].keys():
-            semantic[0][i].append(teste[i])
+    teste = {}
 
-        for gram in token_grams:
-            original, results = create_sentences([' '.join(i) for i in gram],semantic[0])
-            originals.append(gram)
-            all_results.extend(results)
-        
-        all_results = set(all_results)
+    for i in range(len(a)):
+        teste[' '.join(grams[i])] = ' '.join(a[i])
+    
+    for i in semantic[0].keys():
+        semantic[0][i].append(teste[i])
 
-        #original, all_results = correct(original,all_results)
-        
-        data['original'] = request.POST['search']
-        data['sentences'] = {}
+    for gram in token_grams:
+        original, results = create_sentences([' '.join(i) for i in gram],semantic[0])
+        originals.append(gram)
+        all_results.extend(results)
+    
+    all_results = set(all_results)
 
-        #output = {}
+    #original, all_results = correct(original,all_results)
+    
+    data['original'] = request.POST['search']
+    data['sentences'] = {}
 
-        lista = query({
-                "inputs": {
-                    "source_sentence": request.POST['search'],
-                    "sentences": list(all_results)
-                },
-            },'all-MiniLM-L6-v2')
+    #output = {}
 
-        if not isinstance(lista,list):
-            vote = Vote.objects.get(id=1)
-            data['vote'] = round((vote.like*100) / vote.total, 2)
-            messages.info(request, 'There was an error performing your search. Please try again.')  
-            return render(request,'index.html',data)
-        #for sentence_transformer in sentence_transformers
-        #output['all-MiniLM-L6-v2'] = sentence_scores(data['original'], data['sentences'])
+    lista = query({
+            "inputs": {
+                "source_sentence": request.POST['search'],
+                "sentences": list(all_results)
+            },
+        },'all-MiniLM-L6-v2')
 
-        all_results = list(all_results)
+    if not isinstance(lista,list):
+        vote = Vote.objects.get(id=1)
+        data['vote'] = round((vote.like*100) / vote.total, 2)
+        messages.info(request, 'There was an error performing your search. Please try again.')  
+        return render(request,'index.html',data)
+    #for sentence_transformer in sentence_transformers
+    #output['all-MiniLM-L6-v2'] = sentence_scores(data['original'], data['sentences'])
 
-        #lista = list(output.values())
-        total = len(lista)
-        for i in range(total):          
-            data['sentences'][all_results[i]] = round(lista[i], 2)
-        
-        data['sentences'] = {k: v for k, v in sorted(data['sentences'].items(), reverse=True, key=lambda item: item[1])}
-        data = json.dumps(data)
-        return JsonResponse(data, safe=False)
-    else:
-        return JsonResponse({}, safe=False)
+    all_results = list(all_results)
+
+    #lista = list(output.values())
+    total = len(lista)
+    for i in range(total):          
+        data['sentences'][all_results[i]] = round(lista[i], 2)
+    
+    data['sentences'] = {k: v for k, v in sorted(data['sentences'].items(), reverse=True, key=lambda item: item[1])}
+    return JsonResponse(data, safe=False)
+
 
        
 
