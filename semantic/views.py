@@ -7,7 +7,7 @@ from . import wordnet
 from semantic.models import Vote
 from django.contrib import messages
 #import language_tool_python
-
+import json
 nlp = spacy.load('en_core_web_lg')
 suffixes = list(nlp.Defaults.suffixes + [r'''\w+-\w+'''])
 suffix_regex = spacy.util.compile_suffix_regex(suffixes)
@@ -240,8 +240,10 @@ def api(request):
             data['sentences'][all_results[i]] = round(lista[i], 2)
         
         data['sentences'] = {k: v for k, v in sorted(data['sentences'].items(), reverse=True, key=lambda item: item[1])}
-
-        return JsonResponse([data], safe=False)
+        data = json.dumps(data)
+        return JsonResponse(data, safe=False)
+    else:
+        return JsonResponse({}, safe=False)
 
        
 
