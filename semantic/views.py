@@ -215,14 +215,14 @@ def api(request):
 
     #original, all_results = correct(original,all_results)
     
-    data['original'] = request.POST['search']
+    data['original'] = request.GET['search']
     data['sentences'] = {}
 
     #output = {}
 
     lista = query({
             "inputs": {
-                "source_sentence": request.POST['search'],
+                "source_sentence": request.GET['search'],
                 "sentences": list(all_results)
             },
         },'all-MiniLM-L6-v2')
