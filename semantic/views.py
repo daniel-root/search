@@ -17,7 +17,7 @@ API_TOKEN = 'api_sDCDNZeeeRAQvnIYclYFlzmMZUZiuEgiBN'
 headers = {"Authorization": f"Bearer {API_TOKEN}"}
 '''
 def sentence_scores(original, sentences):    
-    model = SentenceTransformer('all-MiniLM-L6-v2')
+    model = SentenceTransformer('multi-qa-MiniLM-L6-cos-v1')
 
     embeddings1 = model.encode(original, convert_to_tensor=True)
     embeddings2 = model.encode(sentences, convert_to_tensor=True)
@@ -127,7 +127,7 @@ def home(request):
                     "source_sentence": request.POST['search'],
                     "sentences": list(all_results)
                 },
-            },'all-MiniLM-L6-v2')
+            },'multi-qa-MiniLM-L6-cos-v1')
 
         if not isinstance(lista,list):
             vote = Vote.objects.get(id=1)
@@ -135,7 +135,7 @@ def home(request):
             messages.info(request, 'There was an error performing your search. Please try again.')  
             return render(request,'index.html',data)
         #for sentence_transformer in sentence_transformers
-        #output['all-MiniLM-L6-v2'] = sentence_scores(data['original'], data['sentences'])
+        #output['multi-qa-MiniLM-L6-cos-v1'] = sentence_scores(data['original'], data['sentences'])
 
         all_results = list(all_results)
 
@@ -225,7 +225,7 @@ def api(request):
                 "source_sentence": request.GET['search'],
                 "sentences": list(all_results)
             },
-        },'all-MiniLM-L6-v2')
+        },'multi-qa-MiniLM-L6-cos-v1')
 
     if not isinstance(lista,list):
         vote = Vote.objects.get(id=1)
@@ -233,7 +233,7 @@ def api(request):
         messages.info(request, 'There was an error performing your search. Please try again.')  
         return render(request,'index.html',data)
     #for sentence_transformer in sentence_transformers
-    #output['all-MiniLM-L6-v2'] = sentence_scores(data['original'], data['sentences'])
+    #output['multi-qa-MiniLM-L6-cos-v1'] = sentence_scores(data['original'], data['sentences'])
 
     all_results = list(all_results)
 
